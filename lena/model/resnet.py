@@ -58,11 +58,10 @@ class ResNet(nn.Module):
 
         self.in_channels = 64
         self.conv = nn.Sequential(
-            nn.Conv2d(in_channels, self.in_channels, kernel_size=7, stride=2, padding=3, bias=False),
+            nn.Conv2d(in_channels, self.in_channels, kernel_size=3, padding=1, bias=False),
             nn.BatchNorm2d(self.in_channels),
             nn.ReLU(inplace=True)
         )
-        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
         self.layer1 = self._make_layer(64, layers[0])
         self.layer2 = self._make_layer(128, layers[1], stride=2)
@@ -96,8 +95,7 @@ class ResNet(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv(x)
-        x = self.maxpool(x)
-
+        
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
