@@ -102,7 +102,7 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = F.adaptive_avg_pool2d(x, 1)
-        x = torch.flatten(x)
+        x = torch.flatten(x, start_dim=1)
         x = self.fc(x)
 
         return x
